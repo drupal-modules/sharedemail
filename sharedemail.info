@@ -1,4 +1,4 @@
 
-name = "Shared E-mail"
+name = "Shared Email"
 description = Allow site members to use the same email address more than once.
 core = 6.x

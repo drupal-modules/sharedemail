@@ -20,7 +20,7 @@ function sharedemail_help($path, $arg) {
  * Implementation of hook_perm().
  */
 function sharedemail_perm() {
-  return array('administer sharedemail', 'show warning text');
+  return array('administer shared email', 'show warning text');
 }
 
 /**
@@ -28,8 +28,8 @@ function sharedemail_perm() {
  */
 function sharedemail_menu() {
   $items['admin/settings/sharedemail'] = array(
-    'title'            => 'Sharedemail',
-    'description'      => 'Configure the message that sharedemail displays.',
+    'title'            => 'Shared Email',
+    'description'      => 'Configure the message that Shared Email displays.',
     'page callback'    => 'drupal_get_form',
     'page arguments'   => array('sharedemail_admin_settings'),
     'access arguments' => array('administer sharedemail'),
@@ -56,7 +56,7 @@ function sharedemail_admin_settings() {
 
   $form['sharedemail_msg'] = array(
     '#type'          => 'textarea',
-    '#title'         => t('Sharedemail Message'),
+    '#title'         => t('Shared Email Message'),
     '#default_value' => variable_get('sharedemail_msg', $msg),
     '#rows'          => 15,
     '#description'   => t('Warning message that is only displayed to users with appropriate permission, when they choose to save an email address already used by another user.'),

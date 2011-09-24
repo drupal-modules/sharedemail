@@ -1,0 +1,88 @@
+<?php
+// $Id$
+
+/**
+ * @file
+ *  Integrate Subuser and Shared Email modules.
+ */
+
+/**
+ * Implementation of hook_form_alter().
+ * Altering the subuser_create_form.
+ */
+function sharedemail_subuser_form_subuser_create_form_alter(&$form, &$form_state) {
+  $parent = user_load($form['parent_user']['#value']);
+  $form['account']['mail']['#type'] = 'hidden';
+  $form['account']['mail']['#default_value'] = $parent->mail;
+  $form['account']['mail_message'] = array(
+    '#value' => t('This account will share the email address !email with the parent account !parent.', array(
+      '!email' => '<em>' . $parent->mail . '</em>',
+      '!parent' => '<em>' . $parent->name . '</em>',
+    )),
+  );
+}
+
+/**
+ * Implementation of hook_form_alter().
+ * Altering the user_edit_form.
+ */
+function sharedemail_subuser_form_user_profile_form_alter(&$form, &$form_state) {
+  // If the current user is the one being edited, and it has a parent, deny mail edit access.
+  if ($GLOBALS['user']->uid == $form['#uid']) {
+    $form['account']['mail']['#access'] = !((bool) subuser_get_parent($form['#uid']));
+  }
+  if (subuser_get_subusers($form['#uid'])) {
+    $form['account']['pass']['#weight'] = 1;
+    $form['account']['status']['#weight'] = 2;
+    $form['account']['sharedemail_mail_sync'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Sync email to subusers'),
+      '#description' => t('This email address will be used for all of it\'s subuser accounts.'),
+      '#default_value' => FALSE,
+    );
+  }
+}
+
+/**
+ * Implementation of hook_user().
+ */
+function sharedemail_subuser_user($op, &$edit, $account, $category = array()) {
+  switch ($op) {
+    case 'update':
+      // Update email addresses of subuser accounts to match parent account.
+      // Only do this on parent account request. No need to update subusers
+      // on 'insert' because subuser accounts would not exist yet.
+      $subusers = subuser_get_subusers($account->uid);
+      if (empty($subusers) || !$edit['sharedemail_mail_sync']) {
+        return;
+      }
+      $sql = "UPDATE {users} SET mail='%s' WHERE uid=" . implode(' OR uid=', $subusers);
+      if (db_query($sql, $edit['mail']) !== FALSE) {
+        drupal_set_message(t('Subuser accounts updated to email address !mail',
+          array('!mail' => '<em>' . $edit['mail'] . '</em>')
+        ));
+      }
+      break;
+  }
+}
+
+/**
+ * Implementation of hook_sharedemail_policy_info().
+ *
+ * Only subusers may share email addresses. Because this policy denies parent
+ * accounts the ability to share email addresses, there is nothing to gain by
+ * guaranteeing that subuser accounts can only share with their 'siblings'.
+ */
+function sharedemail_subuser_sharedemail_policy_info($uid, $parent_uid, $existing, $mail) {
+  if ($parent_uid == NULL) {
+    // If the user accounts that share this address are subusers of the current
+    // account, allow the account to share the email address.
+    $subusers = subuser_get_subusers($uid);
+    $non_subusers = array_diff($existing, $subusers);
+    if (empty($non_subusers)) {
+      return TRUE;
+    }
+    return FALSE;
+  }
+  return TRUE;
+}

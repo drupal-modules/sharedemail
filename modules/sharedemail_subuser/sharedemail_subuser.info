@@ -1,0 +1,6 @@
+; $Id$
+name = "Shared Email Subuser"
+description = "Integrate Subuser module with Shared Email."
+dependencies[] = "sharedemail"
+dependencies[] = "subuser"
+core = "6.x"
