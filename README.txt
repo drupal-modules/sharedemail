@@ -11,7 +11,7 @@ Displays a warning to the user that they are using a shared email.
 Based on [Allowing Multiple Accounts from the Same E-Mail Address?
 ](http://drupal.org/node/15578#comment-249157)
 
-All this module does is remove the unique constraint for the email using a hook.
+All this module does is modify the email address before it is validated by the user module.
 
 Because it only changes the edit value rather than the form value,
 the validation will pass but the original unchanged email is still stored properly.
