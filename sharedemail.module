@@ -1,5 +1,4 @@
 <?php
-// $Id:$
 
 /**
  * @file
@@ -7,18 +6,18 @@
  */
 
 /**
- * Implementation of hook_help().
+ * Implements hook_help().
  */
 function sharedemail_help($path, $arg) {
   switch ($path) {
     case 'admin/help#sharedemail':
-    $output = '<p>'. t('Allow an e-mail address to be used by more than one user account.') .'</p>';
-    return $output;
+      $output = '<p>' . t('Allow an e-mail address to be used by more than one user account.') . '</p>';
+      return $output;
   }
 }
 
 /**
- * Implementation of hook_permission().
+ * Implements hook_permission().
  */
 function sharedemail_permission() {
   return array(
@@ -32,7 +31,7 @@ function sharedemail_permission() {
 }
 
 /**
- * Implementation of hook_menu().
+ * Implements hook_menu().
  */
 function sharedemail_menu() {
 
@@ -44,23 +43,21 @@ function sharedemail_menu() {
     'access arguments' => array('administer sharedemail'),
     'type'             => MENU_NORMAL_ITEM,
   );
-  
+
   return $items;
 }
 
-
 /**
- * Configure Shared E-mail settings
+ * Configure Shared E-mail settings.
  *
  * @ingroup forms
  * @see system_settings_form()
  */
 function sharedemail_admin_settings($form, &$form_state) {
-//  $form = array();
 
-  $msg = t('WARNING: The e-mail address you are using has already been registered on this site by another user account. '.
-          'You should be aware that personal information such as password resets will be sent to this address. '.
-          'We strongly recommend changing your registered address to a different e-mail address. '.
+  $msg = t('WARNING: The e-mail address you are using has already been registered on this site by another user account. ' .
+          'You should be aware that personal information such as password resets will be sent to this address. ' .
+          'We strongly recommend changing your registered address to a different e-mail address. ' .
           'You can do this at any time from your account page when you login.');
 
   $form['sharedemail_msg'] = array(
@@ -75,7 +72,7 @@ function sharedemail_admin_settings($form, &$form_state) {
 }
 
 /**
- * Implementation of hook_form_FORM_ID_alter() for user_register_form().
+ * Implements hook_form_FORM_ID_alter() for user_register_form().
  *
  * Replace's the form's default #validate function with a wrapper function
  * to make the User module think the e-mail address is unique.
@@ -85,7 +82,7 @@ function sharedemail_form_user_register_form_alter(&$form, &$form_state, $form_i
 }
 
 /**
- * Implementation of hook_form_FORM_ID_alter() for user_profile_form().
+ * Implements hook_form_FORM_ID_alter() for user_profile_form().
  *
  * Replace's the form's default #validate function with a wrapper function
  * to make the User module think the e-mail address is unique.
@@ -95,7 +92,7 @@ function sharedemail_form_user_profile_form_alter(&$form, &$form_state, $form_id
 }
 
 /**
- * Implementation of hook_form_FORM_ID_alter() for user_account_form().
+ * Implements hook_form_FORM_ID_alter() for user_account_form().
  *
  * Replace's the form's default #validate function with a wrapper function
  * to make the User module think the e-mail address is unique.
@@ -107,8 +104,8 @@ function sharedemail_form_user_account_form_alter(&$form, &$form_state, $form_id
   // Find the $form['#validate'] entry for user_profile_form's default validater,
   // and replace it with the name of this module's #validate function.
   if (is_array($form['#validate'])) {
-    $key = array_search( 'user_account_form_validate', $form['#validate'], TRUE );
-    if ( $key !== FALSE ) {
+    $key = array_search( 'user_account_form_validate', $form['#validate'], TRUE);
+    if ($key !== FALSE) {
       $form['#validate'][$key] = 'sharedemail_account_form_validate';
     }
   }
@@ -128,7 +125,7 @@ function sharedemail_account_form_validate($form, &$form_state) {
 
   // Test whether the e-mail address should be disguised.
   if ($mail = sharedemail_is_shared_email($form, $form_state)) {
-    $form_state['values']['mail'] = 'sharedemail_'. $mail;
+    $form_state['values']['mail'] = 'sharedemail_' . $mail;
   }
 
   // Call the User module's validate function.
@@ -148,12 +145,13 @@ function sharedemail_account_form_validate($form, &$form_state) {
  * so that the User module's validation function will think it's unique.
  *
  * @param $form
- *  The user form that was submitted.
+ *   The user form that was submitted.
  * @param $form_state
- *  The state of the form.
+ *   The state of the form.
+ *
  * @return
- *  Returns the e-mail address if it's a duplicate and is allowed.
- *  Otherwise nothing is returned.
+ *   Returns the e-mail address if it's a duplicate and is allowed.
+ *   Otherwise nothing is returned.
  */
 function sharedemail_is_shared_email($form, &$form_state) {
 
@@ -179,8 +177,3 @@ function sharedemail_is_shared_email($form, &$form_state) {
   }
   // return nothing.
 }
-
-/**
- * Note: hook_simpletest() is deprecated.
- */
-

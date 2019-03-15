@@ -1,10 +1,11 @@
 <?php
-class sharedemailTest extends DrupalTestCase {
-  /**
-   *  here there be fixtures
-   */
 
-  function get_info() {
+class sharedemailTest extends DrupalTestCase {
+
+  /**
+   * Here there be fixtures.
+   */
+  public static function get_info() {
     return array(
       'name' => t('sharedemail Unit Tests'),
       'desc' => t('tests the unit functions of the sharedemail module'),
@@ -13,124 +14,125 @@ class sharedemailTest extends DrupalTestCase {
   }
 
   /**
-   * setUp and tearDown functions to configure the fixtures
+   * SetUp and tearDown functions to configure the fixtures.
    */
-  public function setUp() {
-  }
-  
-  public function tearDown() {
+  public function setUp() {}
+
+  /**
+   * Post-test function.
+   */
+  public function tearDown() {}
+
+  /**
+   * This method tests sharedemail user.
+   */
+  public function testSharedemailUser() {
+    $this->assertFalse(1);
+    // The test intentionally fails until you supply good code.
   }
 
   /**
-   *  this method tests sharedemail_user
+   * This method tests sharedemail menu.
    */
-  public function test_sharedemail_user() {
+  public function testSharedemailMenu() {
     $this->assertFalse(1);
-    // the test intentionally fails until you supply good code
+    // The test intentionally fails until you supply good code.
   }
 
   /**
-   *  this method tests sharedemail_menu
+   * This method tests sharedemail admin settings.
    */
-  public function test_sharedemail_menu() {
+  public function testSharedemailAdminSettings() {
     $this->assertFalse(1);
-    // the test intentionally fails until you supply good code
+    // The test intentionally fails until you supply good code.
   }
 
   /**
-   *  this method tests sharedemail_admin_settings
+   * This method tests sharedemail perm.
    */
-  public function test_sharedemail_admin_settings() {
+  public function testSharedemailPerm() {
     $this->assertFalse(1);
-    // the test intentionally fails until you supply good code
+    // The test intentionally fails until you supply good code.
   }
 
   /**
-   *  this method tests sharedemail_perm
+   * This method tests sharedemail access.
    */
-  public function test_sharedemail_perm() {
+  public function testSharedemailAccess() {
     $this->assertFalse(1);
-    // the test intentionally fails until you supply good code
+    // The test intentionally fails until you supply good code.
   }
 
   /**
-   *  this method tests sharedemail_access
+   * This method tests sharedemail node info.
    */
-  public function test_sharedemail_access() {
+  public function testSharedemailNodeInfo() {
     $this->assertFalse(1);
-    // the test intentionally fails until you supply good code
+    // The test intentionally fails until you supply good code.
   }
 
   /**
-   *  this method tests sharedemail_node_info
+   * This method tests sharedemail form.
    */
-  public function test_sharedemail_node_info() {
+  public function testSharedemailForm() {
     $this->assertFalse(1);
-    // the test intentionally fails until you supply good code
+    // The test intentionally fails until you supply good code.
   }
 
   /**
-   *  this method tests sharedemail_form
+   * This method tests sharedemail insert.
    */
-  public function test_sharedemail_form() {
+  public function testSharedemailInsert() {
     $this->assertFalse(1);
-    // the test intentionally fails until you supply good code
+    // The test intentionally fails until you supply good code.
   }
 
   /**
-   *  this method tests sharedemail_insert
+   * This method tests sharedemail update.
    */
-  public function test_sharedemail_insert() {
+  public function testSharedemailUpdate() {
     $this->assertFalse(1);
-    // the test intentionally fails until you supply good code
+    // The test intentionally fails until you supply good code.
   }
 
   /**
-   *  this method tests sharedemail_update
+   * This method tests sharedemail delete.
    */
-  public function test_sharedemail_update() {
+  public function testSharedemailDelete() {
     $this->assertFalse(1);
-    // the test intentionally fails until you supply good code
+    // The test intentionally fails until you supply good code.
   }
 
   /**
-   *  this method tests sharedemail_delete
+   * This method tests sharedemail load.
    */
-  public function test_sharedemail_delete() {
+  public function testSharedemailLoad() {
     $this->assertFalse(1);
-    // the test intentionally fails until you supply good code
+    // The test intentionally fails until you supply good code.
   }
 
   /**
-   *  this method tests sharedemail_load
+   * This method tests sharedemail view.
    */
-  public function test_sharedemail_load() {
+  public function testSharedemailView() {
     $this->assertFalse(1);
-    // the test intentionally fails until you supply good code
+    // The test intentionally fails until you supply good code.
   }
 
   /**
-   *  this method tests sharedemail_view
+   * This method tests sharedemail block.
    */
-  public function test_sharedemail_view() {
+  public function testSharedemailBock() {
     $this->assertFalse(1);
-    // the test intentionally fails until you supply good code
+    // The test intentionally fails until you supply good code.
   }
 
   /**
-   *  this method tests sharedemail_block
+   * This method tests sharedemail simpletest.
    */
-  public function test_sharedemail_block() {
+  public function testSharedemailSimpletest() {
     $this->assertFalse(1);
-    // the test intentionally fails until you supply good code
+    // The test intentionally fails until you supply good code.
   }
 
-  /**
-   *  this method tests sharedemail_simpletest
-   */
-  public function test_sharedemail_simpletest() {
-    $this->assertFalse(1);
-    // the test intentionally fails until you supply good code
-  }
 }
-?>
